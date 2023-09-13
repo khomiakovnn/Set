@@ -1,19 +1,34 @@
 import Team from '../Team.js';
 
-// const datalist = [
-//   ['Anatol-101_ivanov', true],
-//   ['Anatol-1010_ivanov', false],
-//   ['1Anatol-101_ivanov', false],
-//   ['Anatol-101_ivanov1', false],
-//   ['-Anatol-101_ivanov', false],
-//   ['Anatol-101_ivanov-', false],
-//   ['_Anatol-101_ivanov', false],
-//   ['Anatol-101_ivanov_', false],
-// ];
+test('normal persona input', () => {
+  const team = new Team();
+  team.add('username');
+  const result = new Set();
+  result.add('username');
+  expect(team.members).toEqual(result);
+});
 
-// const handler = test.each(datalist);
+function typeTest() {
+  const team = new Team();
+  team.add('Ivan');
+  return team.add('Ivan');
+}
+test('double persona input', () => {
+  expect(typeTest).toThrow('Character is alresdy in team');
+});
 
-// handler('test for %s', (username, valid) => {
-//   const validator = new Team();
-//   expect(validator.validateUsername(username)).toBe(valid);
-// });
+test('multy person input', () => {
+  const team = new Team();
+  team.addAll('username1', 'username2');
+  const result = new Set();
+  result.add('username1');
+  result.add('username2');
+  expect(team.members).toEqual(result);
+});
+
+test('array make', () => {
+  const team = new Team();
+  team.addAll('username1', 'username2');
+  const result = ['username1', 'username2'];
+  expect(team.toArray()).toEqual(result);
+});
